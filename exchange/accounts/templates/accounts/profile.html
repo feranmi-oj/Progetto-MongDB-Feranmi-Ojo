@@ -1,0 +1,199 @@
+{% extends "app/base.html" %}
+
+{% block content %}
+<br>
+<br>
+<br>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+
+
+
+<!-- Section: User profile -->
+<section class="container section scrollspy" id="services" >
+    {% for message in messages %}
+    {% if 'success' in message.tags %}
+    <div class="card green lighten-2 white-text">
+        {% elif 'error' in message.tags %}
+        <div class="card red lighten-2 white-text">
+            {% endif %}
+
+            <div class=" card-content center">
+                <h5 class="">{{ message }}</h5>
+            </div>
+        </div>
+    </div>
+        {% endfor %}
+    <div class="container row" >
+        <div class="col s12 l12">
+        <!-- Profile info -->
+            <div class="card "  style="background:#CD853F" >
+                <div class=" card-content">
+                    <div class="card-action center-align flow-text white-text">
+                        <h4 class=" text:center color:white"><strong>INFO PROFILE: {{ user_profile.user.username }}</strong></h4>
+                    </div>
+                    <table class=" table table-dark " >
+                        <thead>
+                        <tr class="white-text flow-text">
+                            <th>Username    </th>
+                            <th>First name    </th>
+                            <th>Last name    </th>
+                            <th>Email</th>
+                            <th>Last ip_address</th>
+                            <th>Last Login</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ user_profile.user.username }}</td>
+                            <td>{{ user_profile.user.first_name }}</td>
+                            <td>{{ user_profile.user.last_name }}</td>
+                            <td>{{ user_profile.user.email }}</td>
+                            <td>{{ user_profile.ip_address}}</td>
+                            <td>{{ user_profile.last_login}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-outline-dark" href="{% url 'accounts:password_change'%}" style="margin: 10px;;">Change your password here</a>
+                    <a class="btn btn-outline-dark" href="{% url 'accounts:edit'%}" style="margin: 10px;;">Change your profile</a>
+                </div>
+            </div>
+        </div>
+
+         <div class="col s12 l12">
+            <div class="card"  style="background:#CD853F">
+                <div class=" card-content">
+                    <div class="card-action center-align flow-text white-text">
+                        <h4 class=" text:center color:white"><strong>MY WALLET</strong></h4>
+                    </div>
+                    <table class=" table table-dark " >
+                        <thead>
+                        <tr class="white-text flow-text">
+                            <th>Bitcoins available</th>
+                            <th>Initial Bitcoins</th>
+                            <th>Dollars available</th>
+                            <th>Initial dollars</th>
+                            <th>Profit</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{{ user_wallet.btc_amount|floatformat:8 }}</td>
+                            <td>{{ user_wallet.btc_balance|floatformat:8 }}</td>
+                            <td>{{ user_wallet.usd_amount|floatformat:4 }}$</td>
+                            <td>{{ user_wallet.usd_balance|floatformat:4 }}$</td>
+                            <td>{{ user_wallet.profit|floatformat:4 }}$</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="container">
+                     <a class="btn btn-outline-dark" href="{% url 'app:profit'%}" style="margin: 10px;;">Profit-JsonFile</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    <div class="container">
+
+        </div>
+
+        <!-- Order Tables -->
+        <div class="col s12 l12" id="cards">
+            <div class="container">
+                <div class="row">
+
+
+
+                    <!-- Buy orders -->
+                    <div class="col s12 m6">
+                        <div class="card text-white  mb-3" style="background:#CD853F">
+                            <div class="card-action center-align flow-text white-text">
+                                MY PURCHASE ORDERS
+                            </div>
+                            <div class="card-content">
+                                <table class="table table-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>Quantity (BTC)</th>
+                                        <th>Value (USD)</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in my_purchase_orders_list %}
+                                    <tr>
+                                        <td>{{ order.quantity }}</td>
+                                        <td>{{ order.price }}</td>
+                                        <td>{{order.status}}</td>
+                                        <td>{% if order.user.id == user_wallet.user.id %}
+                                            <form action="." method="POST"> {% csrf_token %}
+                                                <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
+                                                    <i class="material-icons prefix">arrow_back_ios</i>
+                                                    <i class="material-icons prefix">delete</i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sell orders -->
+                    <div class="col s12 m6">
+                        <div class="card text-white  mb-3" style="background:#CD853F">
+                            <div class="card-action center-align flow-text white-text">
+                                MY SALE ORDERS
+                            </div>
+                            <div class="card-content">
+                                <table class="table table-dark">
+                                    <thead>
+                                    <tr>
+                                        <th>Quantity (BTC)</th>
+                                        <th>Value (USD)</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for order in  my_sale_orders_list %}
+                                    <tr>
+                                        <td>{{ order.quantity }}</td>
+                                        <td>{{ order.price }}</td>
+                                        <td>{{order.status}}</td>
+                                        <td>{% if order.user.id == user_wallet.user.id %}
+                                            <form action="." method="POST"> {% csrf_token %}
+                                                <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
+                                                    <i class="material-icons prefix">arrow_back_ios</i>
+                                                    <i class="material-icons prefix">delete</i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

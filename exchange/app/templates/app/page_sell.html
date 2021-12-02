@@ -1,0 +1,174 @@
+{% extends "app/base.html" %}
+{% load static%}
+
+{% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
+    <br>
+    <br>
+    <br>
+    <style>body {
+      background-position: center;
+      background-size: cover;
+      background-image: url("https://www.bergamonews.it/photogallery_new/images/2020/11/criptovalute-come-investire-in-bitcoin-consigli-e-suggerimenti-686509.large.webp");
+      min-height: 100%;}</style>
+
+    <h2 class=" font-weight-bold border-bottom"style="color:#CD853F "><strong > SELL PAGE</strong>   </h2>
+
+
+    <body>
+    <!-- Wallet_Table -->
+    <div class="card" id="table" style="background:#CD853F">
+        <div class=" card-content">
+            <div class="card-action center-align flow-text white-text">
+                <h4 class=" text:center color:white"><strong>Your Wallet</strong></h4>
+            </div>
+            <table class=" table table-dark " >
+                    <thead>
+                    <tr class="white-text flow-text">
+                        <th>Bitcoins available</th>
+                        <th>Initial Bitcoins</th>
+                        <th>Dollars available</th>
+                        <th>Initial dollars</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ user_wallet.btc_amount|floatformat:8 }}</td>
+                        <td>{{ user_wallet.btc_balance|floatformat:8 }}</td>
+                        <td>{{ user_wallet.usd_amount|floatformat:4 }}$</td>
+                        <td>{{ user_wallet.usd_balance|floatformat:4 }}$</td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <section class="container section scrollspy" id="services">
+        <div class="container row">
+
+            <div class="col s12 l12">
+
+                <!-- Card: Buy Order -->
+                <div class="container" id="buy-card" >
+                    <div class="card text-white  mb-3" style="background:#CD853F">
+                         <div class="card-action center-align flow-text white-text">
+                            Sell-BITCOIN
+                        </div>
+                        <div class="card-stacked">
+                            <div class="card-content ">
+                                <form action="." method="POST" >
+                                    {% csrf_token %}
+                                    {{ form.as_p }}
+                                    <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Tables -->
+    <div class="col s12 l12" id="cards">
+        <div class="container">
+            <div class="row">
+
+
+
+                <!-- Buy orders -->
+                <div class="col s12 m6">
+                    <div class="card text-white  mb-3" style="background:#CD853F">
+                        <div class="card-action center-align flow-text white-text">
+                            BID - BUY ORDERS
+                        </div>
+                        <div class="card-content">
+                            <table class="table table-dark">
+                                <thead>
+                                <tr>
+                                    <th>Quantity (BTC)</th>
+                                    <th>Value (USD)</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for order in purchase_orders_list %}
+                                <tr>
+                                    <td>{{ order.quantity }}</td>
+                                    <td>{{ order.price }}</td>
+                                    <td>{% if order.user.id == user_wallet.user.id %}
+                                        <form action="." method="POST"> {% csrf_token %}
+                                            <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
+                                                <i class="material-icons prefix">arrow_back_ios</i>
+                                                <i class="material-icons prefix">delete</i>
+                                            </button>
+                                        </form>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                             <div class="container">
+                                 <a class="btn black" href="{% url 'app:json-purchase'%}" style="margin: 10px;;">JsonFile</a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sell orders -->
+                <div class="col s12 m6">
+                    <div class="card text-white  mb-3" style="background:#CD853F">
+                        <div class="card-action center-align flow-text white-text">
+                            ASK - SELL ORDERS
+                        </div>
+                        <div class="card-content">
+                            <table class="table table-dark">
+                                <thead>
+                                <tr>
+                                    <th>Quantity (BTC)</th>
+                                    <th>Value (USD)</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            {% for order in  sale_orders_list %}
+                              <tr>
+                                <td>{{ order.quantity }}</td>
+                                <td>{{ order.price }}</td>
+                                <td>{% if order.user.id == user_wallet.user.id %}
+                                        <form action="." method="POST"> {% csrf_token %}
+                                            <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
+                                                <i class="material-icons prefix">arrow_back_ios</i>
+                                                <i class="material-icons prefix">delete</i>
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                            </table>
+                             <div class="container">
+                                 <a class="btn black" href="{% url 'app:json-sale'%}" style="margin: 10px;;">JsonFile</a>
+                             </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </body>
+
+
+    <br>
+    <br>
+    <br>
+
+{%endblock%}

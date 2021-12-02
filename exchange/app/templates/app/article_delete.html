@@ -1,0 +1,22 @@
+{% extends "app/base.html" %}
+{% block content %}
+<h1>Delete Article....</h1>
+<br/>
+<div class="container" align="center">
+    <div class="card vertical" style="background-color: #F5F5DC;">
+        <div class="card-stacked">
+            <div class="card-content">
+                <form method="POST">
+                    {% csrf_token %}
+                    <h4>Are you sure?</h4><br/>
+                    <p><strong>Are you sure you want to delete the article "{{article.title}}"?</strong></p>
+                    <form action="." method="POST"> {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Yes, i'm sure">
+                    </form>
+                    <a  class="btn btn-secondary" href="">No, take me back</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}
