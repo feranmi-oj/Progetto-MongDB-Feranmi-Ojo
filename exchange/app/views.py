@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
 # From this app
-from .models import PurchaseOrder,SaleOrder, Profile, Trade
+from .models import PurchaseOrder,SaleOrder, Profile
 from .forms import Order_Form
 from .market import Report
 from django.urls import reverse_lazy
@@ -62,8 +62,8 @@ def buy_order_view(request):
 						if new_buy_order.profile != sale_order.profile:
 
 							if sale_order.price <= new_buy_order.price:
-								messages.success(request,f'Corrispondenza trovata! Acquista ID ordine: {new_buy_order._id}.\n'
-									  f'ID ordine di vendita: {sale_order._id}.\n'
+								messages.success(request,f'Partner found! Purchase Order ID: {new_buy_order._id}.\n'
+									  f'Sale order id: {sale_order._id}.\n'
 									 )
 
 
@@ -163,7 +163,7 @@ def sell_order_view(request):
 						if buy_open_order.profile != new_sell_order.profile:
 
 							if  buy_open_order.price >= new_sell_order.price:
-								messages.success(request,f'Match found! Sell order id: {new_sell_order._id}.\n'
+								messages.success(request,f'Partner found! Sale Order ID: {new_sell_order._id}.\n'
 									  f'Buy order id: {buy_open_order._id}.\n'
 									  )
 

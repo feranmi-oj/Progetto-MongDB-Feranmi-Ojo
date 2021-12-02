@@ -45,11 +45,4 @@ class SaleOrder(models.Model):
 
 
 
-class Trade(models.Model):
-	_id = ObjectIdField()
-	buyer_user = models.ForeignKey(User, related_name='buyer',on_delete=models.CASCADE)
-	seller_user = models.ForeignKey(User, related_name='seller',on_delete=models.CASCADE)
-	quantity = models.FloatField()
-	price = models.FloatField()
-	datetime = models.DateTimeField(auto_now_add=True)
 

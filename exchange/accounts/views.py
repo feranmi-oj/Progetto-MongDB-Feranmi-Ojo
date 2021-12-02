@@ -21,8 +21,8 @@ def getIpAdd(request):
 
 @login_required()
 def ip_control_view(request):
-    context = {}
-    return render(request, 'accounts/ip_control.html', context)
+
+    return render(request, 'accounts/ip_control.html', )
 
 def getIpAdd(request):
     try:
@@ -60,7 +60,7 @@ def login_view(request):
             if ip_address != user_info.ip_address:
                 user_info.ip_address = ip_address
                 user_info.save()
-                return redirect(f"/ip_control/?next={next}")
+                return redirect(f"accounts:ip-control")
 
             else:
                 return redirect('accounts:profile',user.pk)
