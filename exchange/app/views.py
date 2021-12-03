@@ -261,21 +261,21 @@ def sale_order_Book(request):
         )
     return JsonResponse(response, safe=False)
 
-def delete_order_view(request,id):
+def delete_order_view(request):
 
 	if request.method == 'POST':
 		_id = ObjectId(request.POST['delete'])
 
-		if PurchaseOrder.objects.get(id=id) :
-			p_order = PurchaseOrder.objects.get(id=id)
+		if PurchaseOrder.objects.get(id=_id) :
+			p_order = PurchaseOrder.objects.get(id=_id)
 			profile_pocket = Profile.objects.get(user=p_order.user)
 			profile_pocket.usd_amount += p_order.price
 			profile_pocket.save()
 			p_order.delete()
 			messages.success(request, 'Your order has been deleted successfully!')
 			return redirect('app:buy')
-		elif  SaleOrder.objects.get(id=id):
-			s_order = SaleOrder.objects.get(id=id)
+		elif  SaleOrder.objects.get(id=_id):
+			s_order = SaleOrder.objects.get(id=_id)
 			profile_pocket = Profile.objects.get(user=s_order.user)
 			profile_pocket.btc_amount += s_order.quantity
 			profile_pocket.save()
@@ -284,6 +284,6 @@ def delete_order_view(request,id):
 			return redirect('app:sell')
 
 
-	return render(request, 'app/article_delete.html')
+	return render(request, 'app/order_delete.html')
 	# If method is not POST, render the default template.
 # *Note*: Replace 'template_name.html' with your corresponding template name.

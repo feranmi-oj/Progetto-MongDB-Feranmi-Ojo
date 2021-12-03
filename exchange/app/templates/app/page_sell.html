@@ -116,12 +116,10 @@
                                     <td>{{ order.quantity }}</td>
                                     <td>{{ order.price }}</td>
                                     <td>{% if order.user.id == user_wallet.user.id %}
-                                        <form action="." method="POST"> {% csrf_token %}
-                                            <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
-                                                <i class="material-icons prefix">arrow_back_ios</i>
-                                                <i class="material-icons prefix">delete</i>
-                                            </button>
-                                        </form>
+                                        <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
+
+                                                    delete
+                                                </a>
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -156,12 +154,10 @@
                                 <td>{{ order.quantity }}</td>
                                 <td>{{ order.price }}</td>
                                 <td>{% if order.user.id == user_wallet.user.id %}
-                                        <form action="." method="POST"> {% csrf_token %}
-                                            <button class="btn red lighten-2 white-text" type="submit" name="delete" value="{{ order.pk }}">
-                                                <i class="material-icons prefix">arrow_back_ios</i>
-                                                <i class="material-icons prefix">delete</i>
-                                            </button>
-                                        </form>
+                                       <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
+
+                                                    delete
+                                                </a>
                                     {% endif %}
                                 </td>
                               </tr>
