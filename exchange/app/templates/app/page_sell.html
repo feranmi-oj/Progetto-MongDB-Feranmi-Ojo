@@ -2,6 +2,7 @@
 {% load static%}
 
 {% block content %}
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
     <br>
     <br>
@@ -73,6 +74,19 @@
             </div>
         </div>
     </section>
+     {% for message in messages %}
+    {% if 'success' in message.tags %}
+    <div class="card green lighten-2 white-text">
+        {% elif 'error' in message.tags %}
+        <div class="card red lighten-2 white-text">
+            {% endif %}
+
+            <div class=" card-content center">
+                <h5 class="">{{ message }}</h5>
+            </div>
+        </div>
+    </div>
+        {% endfor %}
 
     <!-- Order Tables -->
     <div class="col s12 l12" id="cards">

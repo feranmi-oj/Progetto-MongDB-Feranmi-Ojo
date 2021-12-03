@@ -8,16 +8,7 @@ from app.market import Report
 from django.utils import timezone
 import random
 
-def getIpAdd(request):
-    try:
-        x_forward = request.META.get("HTTP_X_FORWARDED_FOR")
-        if x_forward:
-            ip = x_forward.split(",")[0]
-        else:
-            ip = request.META.get("REMOTE_ADDR")
-    except:
-        ip = ""
-    return ip
+
 
 @login_required()
 def ip_control_view(request):
