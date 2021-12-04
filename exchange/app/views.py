@@ -123,7 +123,7 @@ def buy_order_view(request):
 	return render(request, 'app/page_buy.html', {'form': form,
 														  'purchase_orders_list': purchase_orders_list,
 														  'sale_orders_list': sale_orders_list,
-														  'user_wallet': profile_pocket,
+														  'profile_pocket': profile_pocket,
 													  	  'currency': currency
 																  })
 
@@ -205,12 +205,12 @@ def sell_order_view(request):
 
 	# Orders lists refresh
 	form = Order_Form()
-	user_wallet= Profile.objects.get(user=request.user)
+	profile_pocket= Profile.objects.get(user=request.user)
 
 	return render(request, 'app/page_sell.html', {'form': form,
 													  'purchase_orders_list': purchase_orders_list,
 													  'sale_orders_list': sale_orders_list,
-													  'user_wallet': user_wallet,
+													  'profile_pocket': profile_pocket,
 												      'currency': currency
 
 												  })

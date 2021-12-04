@@ -114,7 +114,7 @@ def profile(request,id):
     profile_pocket.profit = sum(profit_sell) - sum(profit_buy)
     profile_pocket.save()
 
-    return render(request, 'accounts/profile.html', {'user_profile': user_profile,'user_wallet': profile_pocket,'my_purchase_orders_list':my_purchase_orders_list,'my_sale_orders_list':my_sale_orders_list,'currency':currency})
+    return render(request, 'accounts/profile.html', {'user_profile': user_profile,'profile_pocket': profile_pocket,'my_purchase_orders_list':my_purchase_orders_list,'my_sale_orders_list':my_sale_orders_list,'currency':currency})
 
 @login_required
 def edit_profile(request):
