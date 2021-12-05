@@ -1,1 +1,1 @@
-web: gunicorn exchange.wsgi --log-file -
+web: gunicorn exchange.wsgi 
