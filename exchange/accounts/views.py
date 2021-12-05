@@ -9,7 +9,6 @@ from django.utils import timezone
 import random
 
 
-
 @login_required()
 def ip_control_view(request):
 
