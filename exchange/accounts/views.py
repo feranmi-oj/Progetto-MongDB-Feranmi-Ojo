@@ -46,7 +46,14 @@ def login_view(request):
                 user_info = Profile.objects.create(user=user)
                 user_info.last_login = timezone.now()
             user_info.save()
+            ip_list = []
+
             ip_address = getIpAdd(request)
+            if ip_address not in user_info.ips:
+                ip_list.append(ip_address)
+                user_info.ips = ip_list
+                user_info.save()
+
             if ip_address != user_info.ip_address:
                 user_info.ip_address = ip_address
                 user_info.save()
