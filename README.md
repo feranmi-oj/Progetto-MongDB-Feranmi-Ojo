@@ -25,8 +25,8 @@ Project is created with:
 
 
 
-## DJongo-EXCHANGE Presentation
-To have a preview of the site you can have a look at my PDF
-presentation file: ""
+## DJONGO-EXCHANGE Presentation
+To have a preview of the site you can have a look at my Presentation
+presentation file: "[Progetto-MongoDB-Feranmi-Ojo.pptx](https://github.com/feranmi-oj/Progetto-MongDB-Feranmi-Ojo/blob/master/Progetto-MongoDB-Feranmi-Ojo.pptx)"
 
 
