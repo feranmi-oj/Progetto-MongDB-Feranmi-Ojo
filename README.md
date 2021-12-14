@@ -20,12 +20,12 @@ Project is created with:
 ## Installation
 * Set a virtual environment
 * Install requirements.txt
-* change database insettings.py
+* change database in settings.py
 * Run the server
 
 
 
-## DJongo-Trade  Presentation
+## DJongo-EXCHANGE Presentation
 To have a preview of the site you can have a look at my PDF
 presentation file: ""
 
