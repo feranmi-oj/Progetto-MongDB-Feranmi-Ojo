@@ -1,5 +1,5 @@
-## WELCOME TO DJONGO-TRADE!
-My simple btc/usd exchange =)
+## WELCOME TO DJONGO-EXCHANGE!
+
 
 ## Project Description
 Receive BTCs and usd at sign up and start earning thanks to this simple trading
@@ -26,6 +26,7 @@ Project is created with:
 
 ## DJongo-Eexchange Presentation
 To have a preview of the site you can have a look at my PDF
-presentation file: ""
+presentation file: [Uploading Progetto-MongoDB-Feranmi-Ojo.pptx…]()
+
 
 
