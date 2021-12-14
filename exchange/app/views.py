@@ -56,53 +56,62 @@ def buy_order_view(request):
 													 price=price,
 													 quantity=quantity,
 													 modified=timezone.now())
-				messages.success(request, 'Your order is successfully added to the Order Book!')
+				messages.success(request, f'Your  purchase order of {new_buy_order.quantity} BTC for {new_buy_order.price}  is successfully added to the Order Book! || Status: {new_buy_order.status}')
 				# Order matching
 				if sale_orders_list.exists():
-					for num, sale_order in enumerate(sale_orders_list):
+					max_order_btc=None
+					for sale_order in sale_orders_list:
 						if new_buy_order.profile != sale_order.profile:
-
 							if sale_order.price <= new_buy_order.price:
+								if max_order_btc == None or (sale_order.quantity >= max_order_btc.quantity and sale_order.price<= max_order_btc.price) :
+									max_order_btc = sale_order
 
 
 
+					if max_order_btc!=None:
+					# Modifying orders.
+						if max_order_btc.quantity >= new_buy_order.quantity:
+							messages.info(request, f'Search for the best sales order')
+							messages.info(request, f'Partner found! sale order id:{max_order_btc._id}')
+							messages.success(request, f'He wants to sell {max_order_btc.quantity} BTC for {max_order_btc.price} $')
 
-								# Modifying orders.
-								if sale_order.quantity >= new_buy_order.quantity:
-									messages.success(request,
-													 f'Partner found! ||  Purchase Order ID: {new_buy_order._id}.||'
-													 f'Sale order id: {sale_order._id}.\n'
-													 )
-									# Buy order still open. Updating bitcoins yet to be bought.
-									actual_btc = new_buy_order.quantity
+							# Buy order still open. Updating bitcoins yet to be bought.
+							actual_btc = profile_wallet.btc_amount
 
-									new_buy_order.quantity += sale_order.quantity
-									new_buy_order.status='close'
-									new_buy_order.save()
-									profile_wallet.btc_amount+=new_buy_order.quantity
-									profile_wallet.save()
-									messages.success(request,f'Buy order id: {new_buy_order._id}. || Status: {new_buy_order.status}.\n'
-										  f'|| BTC before trade: {actual_btc}; || BTC after trade: {new_buy_order.quantity};')
-									# Sell order can close.
-									sell_order = SaleOrder.objects.get(_id=sale_order._id)
-									profile_s= Profile.objects.get(user= sell_order.profile.user)
-									profile_s.usd_amount+=sale_order.price
+							new_buy_order.quantity = sale_order.quantity
+							new_buy_order.status='close'
+							new_buy_order.save()
+							profile_wallet.btc_amount+=new_buy_order.quantity
+							profile_wallet.save()
+							messages.info(request, 'Start of the bitcoin exchange')
+							messages.success(request,f'Your Buy order id: {new_buy_order._id}. || Status: {new_buy_order.status}.')
+							messages.success(request, f'|| BTC before exchange: {actual_btc}; || BTC after exchange: {profile_wallet.btc_amount};')
 
-									profile_s.save()
-									sell_order.status = 'close'
-									sell_order.save()
+							# Sell order can close.
+							sell_order = SaleOrder.objects.get(_id=sale_order._id)
+							profile_s= Profile.objects.get(user= sell_order.profile.user)
+							profile_s.usd_amount+=new_buy_order.price
 
-									messages.success(request,f'Sell order id: {sell_order._id}. received the money successfully. Status: {sell_order.status}.')
-									messages.success(request, 'Your order has been totally executed! Congratulations!')
-									return redirect('app:buy')
-								elif sale_order.quantity < new_buy_order.quantity:
-									messages.error(request,"The amount of bitcoins sold is less than the amount you want to buy\n"
-										  f"amount of bitcoins placed for sale : {sale_order.quantity} \n"
-										  f"amount of bitcoins you want to buy : {new_buy_order.quantity}")
+							profile_s.save()
+							max_order_btc.status = 'close'
+							max_order_btc.save()
+
+							messages.success(request, f'Sell order id: {max_order_btc._id}. || Status: {max_order_btc.status}.')
+							messages.success(request, f'Received  successfully {new_buy_order.price} $.')
+							messages.info(request, 'The bitcoin exchange has been totally executed! Congratulations!')
+							return redirect('app:buy')
+						elif max_order_btc.quantity < new_buy_order.quantity:
+							messages.info(request, f'Search for the best sales order')
+							messages.info(request, f'Partner found! sale order id:{max_order_btc._id}')
+							messages.success(request, f'He wants to sell {max_order_btc.quantity} BTC for {max_order_btc.price} $')
+
+							messages.error(request,"The amount of bitcoins they want to sell is less than the amount you want to buy")
+							messages.error(request, f"|Amount of bitcoins placed for sale : {max_order_btc.quantity} ")
+							messages.error(request, f"||Amount of bitcoins you want to buy : {new_buy_order.quantity}")
 
 
-							else:
-								return redirect('app:buy')
+						else:
+							return redirect('app:buy')
 				else:
 
 					return redirect('app:buy')
@@ -159,7 +168,7 @@ def sell_order_view(request):
 													 price=price,
 													 quantity=quantity,
 													 modified=timezone.now())
-				messages.success(request, 'Your order is successfully added to the Order Book!')
+				messages.success(request, f'Your sales order of {new_sell_order.quantity} BTC for {new_sell_order.price}  is successfully added to the Order Book! || Status:{new_sell_order.status}')
 				# Order matching
 				if purchase_orders_list.exists():
 
@@ -168,11 +177,11 @@ def sell_order_view(request):
 						if buy_open_order.profile != new_sell_order.profile:
 							if  buy_open_order.price >= new_sell_order.price :
 
-								if ( max_value == None or buy_open_order.price > max_value.price) :
+								if max_value == None or (buy_open_order.price > max_value.price and buy_open_order.quantity<= max_value.quantity) :
 									max_value = buy_open_order
 
 									if max_value.quantity < new_sell_order.quantity:
-										messages.info(request,f'Purchase price search')
+										messages.info(request,f'Search for the best purchase order')
 										messages.info(request,f'Partner found! purchase order id:{max_value._id}')
 										messages.success(request,f'He wants to buy {max_value.quantity} BTC for {max_value.price} $')
 
@@ -192,10 +201,10 @@ def sell_order_view(request):
 							new_sell_order.save()
 							profile_wallet.usd_amount+=max_value.price
 							profile_wallet.save()
-							messages.info(request, f'Purchase price search')
+							messages.info(request, f'Search for the best purchase order')
 							messages.info(request, f'Partner found! purchase order id:{max_value._id}')
 							messages.success(request, f'He wants to buy {max_value.quantity} BTC for {max_value.price} $')
-							messages.info(request,'start of the bitcoin exchange')
+							messages.info(request,'Start of the bitcoin exchange')
 							messages.success(request, f'Sell order id: {new_sell_order._id}. || Status: {new_sell_order.status}.')
 							messages.success(request,f'|| USD before exchange: {actual_usd}; || USD after exchange: {profile_wallet.usd_amount};')
 
@@ -204,9 +213,8 @@ def sell_order_view(request):
 							profile_b.save()
 							max_value.status = 'close'
 							max_value.save()
-							messages.success(request,
-											 f'Buy order id: {max_value._id}. || Status: {max_value.status}.')
-							messages.success(request,f'received  successfully {new_sell_order.quantity} BTC.')
+							messages.success(request,f'Buy order id: {max_value._id}. || Status: {max_value.status}.')
+							messages.success(request,f'Received  successfully {new_sell_order.quantity} BTC.')
 							messages.info(request, 'The bitcoin exchange has been totally executed! Congratulations!')
 							return redirect('app:sell')
 					else:

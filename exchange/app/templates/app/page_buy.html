@@ -130,7 +130,7 @@
                                         <td>{{ order.quantity|floatformat:0}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
-                                        <td>{% if order.user.id == user_wallet.user.id %}
+                                        <td>{% if order.profile.user.id == profile_pocket.user.id %}
                                             <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
 
                                                         delete
@@ -173,7 +173,7 @@
                                         <td>{{ order.quantity|floatformat:0}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
-                                        <td>{% if order.user.id == user_wallet.user.id %}
+                                        <td>{% if order.profile.user.id == profile_pocket.user.id %}
                                           <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
 
                                                     delete
