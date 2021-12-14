@@ -21,6 +21,8 @@ class Profile(models.Model):
 		return "Profile : {}".format(self.user.username)
 
 
+
+
 class PurchaseOrder(models.Model):
 	_id = ObjectIdField()
 	profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -33,6 +35,8 @@ class PurchaseOrder(models.Model):
 
 
 
+
+
 class SaleOrder(models.Model):
 	_id = ObjectIdField()
 	profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
@@ -41,6 +45,7 @@ class SaleOrder(models.Model):
 	quantity = models.FloatField()
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
+
 
 
 

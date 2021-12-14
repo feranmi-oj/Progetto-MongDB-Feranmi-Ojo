@@ -34,10 +34,10 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td>{{ profile_pocket.btc_amount|floatformat:8 }}</td>
-                        <td>{{ profile_pocket.btc_balance|floatformat:8 }}</td>
-                        <td>{{ profile_pocket.usd_amount|floatformat:4 }}$</td>
-                        <td>{{ profile_pocket.usd_balance|floatformat:4 }}$</td>
+                         <td>{{ profile_pocket.btc_amount|floatformat:0 }} BTC</td>
+                        <td>{{ profile_pocket.btc_balance|floatformat:0 }} BTC</td>
+                        <td>{{ profile_pocket.usd_amount|floatformat:2}}$</td>
+                        <td>{{ profile_pocket.usd_balance|floatformat:2}}$</td>
                     </tr>
                     </tbody>
                 </table>
@@ -79,6 +79,8 @@
     <div class="card green lighten-2 white-text">
         {% elif 'error' in message.tags %}
         <div class="card red lighten-2 white-text">
+            {% elif 'info' in message.tags %}
+            <div class="card blue lighten-2 white-text">
             {% endif %}
 
             <div class=" card-content center">
@@ -105,16 +107,20 @@
                             <table class="table table-dark">
                                 <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Quantity (BTC)</th>
                                     <th>Value (USD)</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for order in purchase_orders_list %}
                                 <tr>
-                                    <td>{{ order.quantity }}</td>
-                                    <td>{{ order.price }}</td>
+                                    <td>{{order.profile}}</td>
+                                    <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                    <td>{{ order.price|floatformat:2}}$</td>
+                                    <td>{{order.created}}</td>
                                     <td>{% if order.user.id == user_wallet.user.id %}
                                         <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
 
@@ -143,17 +149,21 @@
                             <table class="table table-dark">
                                 <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Quantity (BTC)</th>
                                     <th>Value (USD)</th>
+                                    <th>Date</th>
                                     <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                             {% for order in  sale_orders_list %}
                               <tr>
-                                <td>{{ order.quantity }}</td>
-                                <td>{{ order.price }}</td>
-                                <td>{% if order.user.id == user_wallet.user.id %}
+                                  <td>{{order.profile}}</td>
+                                  <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                  <td>{{ order.price|floatformat:2}}$</td>
+                                  <td>{{order.created}}</td>
+                                  <td>{% if order.user.id == user_wallet.user.id %}
                                        <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
 
                                                     delete
