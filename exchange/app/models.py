@@ -18,7 +18,7 @@ class Profile(models.Model):
 	ip_address = models.CharField(max_length=150, blank=True, null=True)
 	last_login = models.DateTimeField(default=timezone.now)
 	def __str__(self):
-		return "Profile : {}".format(self.user.username)
+		return "{}".format(self.user.username)
 
 
 

@@ -197,6 +197,7 @@ def sell_order_view(request):
 						if max_value.quantity == new_sell_order.quantity:
 							# Sell order can close.
 							actual_usd=profile_wallet.usd_amount
+							new_sell_order.price=max_value.price
 							new_sell_order.status ='close'
 							new_sell_order.save()
 							profile_wallet.usd_amount+=max_value.price
@@ -288,21 +289,23 @@ def sale_order_Book(request):
         )
     return JsonResponse(response, safe=False)
 
-def delete_order_view(request):
+def delete_order_view(request,id):
 
 	if request.method == 'POST':
-		_id = ObjectId(request.POST['delete'])
 
-		if PurchaseOrder.objects.get(id=_id) :
-			p_order = PurchaseOrder.objects.get(id=_id)
+
+
+		_id = ObjectId(request.POST['delete'])
+		if PurchaseOrder.objects.get(_id=_id) :
+			p_order = PurchaseOrder.objects.get(_id=_id)
 			profile_pocket = Profile.objects.get(user=p_order.user)
 			profile_pocket.usd_amount += p_order.price
 			profile_pocket.save()
 			p_order.delete()
 			messages.success(request, 'Your order has been deleted successfully!')
 			return redirect('app:buy')
-		elif  SaleOrder.objects.get(id=_id):
-			s_order = SaleOrder.objects.get(id=_id)
+		elif  SaleOrder.objects.get(_id=_id):
+			s_order = SaleOrder.objects.get(_id=_id)
 			profile_pocket = Profile.objects.get(user=s_order.user)
 			profile_pocket.btc_amount += s_order.quantity
 			profile_pocket.save()

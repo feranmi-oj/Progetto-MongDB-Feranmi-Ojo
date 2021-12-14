@@ -137,7 +137,7 @@
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
                                         <td>
-                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' %}" name="delete" >
+                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
 
                                                     delete
                                                 </a>
@@ -176,7 +176,7 @@
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
                                         <td>
-                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' %}" name="delete" >
+                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
 
                                                     delete
                                                 </a>

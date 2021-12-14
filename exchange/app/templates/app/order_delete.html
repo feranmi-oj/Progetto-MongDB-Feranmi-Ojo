@@ -263,9 +263,10 @@ input[type=text]:placeholder, input[type=password]:placeholder {
 * {
   box-sizing: border-box;
 }</style>
-<h1>Delete Article....</h1>
+<h1>Delete Order....</h1>
 <br/>
 <<div class="w3-container " style="padding:128px 16px" align="center">
+
 
         <div class="wrapper fadeInDown" >
           <div id="formContent">
@@ -281,6 +282,21 @@ input[type=text]:placeholder, input[type=password]:placeholder {
                <div id="formFooter">
 
             </div>
+               {% for message in messages %}
+    {% if 'success' in message.tags %}
+    <div class="card green lighten-2 white-text">
+        {% elif 'error' in message.tags %}
+        <div class="card red lighten-2 white-text">
+        {% elif 'info' in message.tags %}
+            <div class="card blue lighten-2 white-text">
+            {% endif %}
+
+            <div class=" card-content center">
+                <h5 class="">{{ message }}</h5>
+            </div>
+        </div>
+    </div>
+        {% endfor %}
             </div>
         </div>
     </div>

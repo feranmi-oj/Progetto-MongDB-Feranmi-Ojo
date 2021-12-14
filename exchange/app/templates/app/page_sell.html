@@ -34,7 +34,7 @@
                     </thead>
                     <tbody>
                     <tr>
-                         <td>{{ profile_pocket.btc_amount|floatformat:0 }} BTC</td>
+                         <td>{{ profile_pocket.btc_amount|floatformat:3 }} BTC</td>
                         <td>{{ profile_pocket.btc_balance|floatformat:0 }} BTC</td>
                         <td>{{ profile_pocket.usd_amount|floatformat:2}}$</td>
                         <td>{{ profile_pocket.usd_balance|floatformat:2}}$</td>
@@ -61,7 +61,7 @@
                                 <form action="." method="POST" >
                                     {% csrf_token %}
                                     {{ form.as_p }}
-                                    <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
+                                    <input class="btn black  " type="submit" value="Submit sell order" name="buy" style="margin: 10px;"/>
                                 </form>
                             </div>
                         </div>
@@ -118,11 +118,11 @@
                                 {% for order in purchase_orders_list %}
                                 <tr>
                                     <td>{{order.profile}}</td>
-                                    <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                    <td>{{ order.quantity|floatformat:3}} BTC</td>
                                     <td>{{ order.price|floatformat:2}}$</td>
                                     <td>{{order.created}}</td>
                                     <td>{% if  order.profile.user.id == profile_pocket.user.id  %}
-                                        <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
+                                        <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
 
                                                     delete
                                                 </a>
@@ -133,7 +133,7 @@
                                 </tbody>
                             </table>
                              <div class="container">
-                                 <a class="btn black" href="{% url 'app:json-purchase'%}" style="margin: 10px;;">JsonFile</a>
+                                 <a class="btn black" href="{% url 'app:json-purchase'%}" target="_blank" style="margin: 10px;;">JsonFile</a>
                              </div>
                         </div>
                     </div>
@@ -160,11 +160,11 @@
                             {% for order in  sale_orders_list %}
                               <tr>
                                   <td>{{order.profile}}</td>
-                                  <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                  <td>{{ order.quantity|floatformat:3}} BTC</td>
                                   <td>{{ order.price|floatformat:2}}$</td>
                                   <td>{{order.created}}</td>
                                   <td>{% if  order.profile.user.id == profile_pocket.user.id  %}
-                                       <a class="btn red lighten-2 white-text" href="{% url 'app:delete'%}" name="delete" >
+                                       <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
 
                                                     delete
                                                 </a>
@@ -175,7 +175,7 @@
                             </tbody>
                             </table>
                              <div class="container">
-                                 <a class="btn black" href="{% url 'app:json-sale'%}" style="margin: 10px;;">JsonFile</a>
+                                 <a class="btn black" href="{% url 'app:json-sale'%}" target="_blank" style="margin: 10px;;">JsonFile</a>
                              </div>
                         </div>
                     </div>
