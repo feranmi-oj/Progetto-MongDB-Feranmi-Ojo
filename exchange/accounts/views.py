@@ -86,6 +86,7 @@ def register_view(request):
             newUser.usd_balance= newUser.usd_amount
             newUser.ip_address=getIpAdd(request)
             newUser.last_login=timezone.now()
+            newUser.ips.append(getIpAdd(request))
             newUser.save()
 
 
