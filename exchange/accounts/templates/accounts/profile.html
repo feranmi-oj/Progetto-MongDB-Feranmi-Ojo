@@ -82,8 +82,8 @@
                         </thead>
                         <tbody>
                         <tr>
-                             <td>{{ profile_pocket.btc_amount|floatformat:0 }} BTC</td>
-                            <td>{{ profile_pocket.btc_balance|floatformat:0 }} BTC</td>
+                             <td>{{ profile_pocket.btc_amount|floatformat:3 }} BTC</td>
+                            <td>{{ profile_pocket.btc_balance|floatformat:3 }} BTC</td>
                             <td>{{ profile_pocket.usd_amount|floatformat:2}}$</td>
                             <td>{{ profile_pocket.usd_balance|floatformat:2}}$</td>
                             <td>{{ profile_pocket.profit|floatformat:2}}$</td>
@@ -132,7 +132,7 @@
                                     <tbody>
                                     {% for order in my_purchase_orders_list %}
                                     <tr>
-                                        <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                        <td>{{ order.quantity|floatformat:3}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
@@ -171,7 +171,7 @@
                                     <tbody>
                                     {% for order in  my_sale_orders_list %}
                                     <tr>
-                                        <td>{{ order.quantity|floatformat:0}} BTC</td>
+                                        <td>{{ order.quantity|floatformat:3}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
