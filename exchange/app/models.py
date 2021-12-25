@@ -23,28 +23,24 @@ class Profile(models.Model):
 
 
 
-class PurchaseOrder(models.Model):
+class Order(models.Model):
 	_id = ObjectIdField()
 	profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
 	status = models.CharField(max_length=5)
+	type = models.CharField(max_length=4)
 	price = models.FloatField()
 	quantity = models.FloatField()
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 
+	def get_id(self):
+		return self._id
 
 
 
 
 
-class SaleOrder(models.Model):
-	_id = ObjectIdField()
-	profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-	status = models.CharField(max_length=5)
-	price = models.FloatField()
-	quantity = models.FloatField()
-	created = models.DateTimeField(auto_now_add=True)
-	modified = models.DateTimeField(auto_now=True)
+
 
 
 

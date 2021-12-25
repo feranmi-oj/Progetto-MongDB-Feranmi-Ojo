@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import RegistrationForm,UserEditForm,LoginForm
 from django.contrib.auth import login,authenticate
 from django.contrib import messages
-from app.models import Profile,PurchaseOrder,SaleOrder
+from app.models import Profile,Order
 from app.market import Report
 from django.utils import timezone
 import random
@@ -104,13 +104,13 @@ def register_view(request):
 def profile(request,id):
     user_profile = get_object_or_404(Profile, user_id=id)
     profile_pocket = Profile.objects.get(user=request.user)
-    my_purchase_orders_list = PurchaseOrder.objects.filter(profile=user_profile).order_by('price')
-    my_sale_orders_list = SaleOrder.objects.filter(profile=user_profile).order_by('price')
+    my_purchase_orders_list = Order.objects.filter(profile=user_profile,type='buy').order_by('price')
+    my_sale_orders_list = Order.objects.filter(profile=user_profile,type='sell').order_by('price')
     impactReport = Report()  # ad impactReport gli assegno la classe Report()
     currency = impactReport.get_data()
 
-    mp_list=PurchaseOrder.objects.filter(profile=user_profile,status='close').order_by('price')
-    sm_list=SaleOrder.objects.filter(profile=user_profile,status='close').order_by('price')
+    mp_list=Order.objects.filter(profile=user_profile,type='buy',status='close').order_by('price')
+    sm_list=Order.objects.filter(profile=user_profile,type='sell',status='close').order_by('price')
     profit_buy=[]
     profit_sell=[]
     for purchase_list in mp_list:

@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'exchange.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'my-djongo2',
+        'NAME': 'my-djongo5',
     }
 }
 

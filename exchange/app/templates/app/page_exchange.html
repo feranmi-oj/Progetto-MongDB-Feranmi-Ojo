@@ -9,13 +9,19 @@
     <br>
     <br>
     <br>
-    <style>body {
+    <style>
+    body {
       background-position: center;
       background-size: cover;
       background-image: url("https://bitcoinexchangeguide.com/wp-content/uploads/2017/06/buying-bitcoins.jpg");
-      min-height: 100%;}</style>
+      min-height: 100%;}
+    .formOrder{
+    background-color: #A52A2A;
+    }
 
-    <h2 class=" font-weight-bold border-bottom"style="color:#CD853F "><strong > PURCHASE PAGE</strong>   </h2>
+</style>
+
+    <h2 class=" font-weight-bold border-bottom"style="color:#CD853F "><strong >PAGE BITCOIN EXCHANGE </strong>   </h2>
 
 
     <body>
@@ -62,40 +68,48 @@
     </div>
         {% endfor %}
 
-        <!-- Tabs -->
-     <div class=" card-content center">
-                <h5 class="">{{ a }}</h5>
-     </div>
 
-        <section class="container section scrollspy" id="services">
-            <div class="container row">
+        <!-- Card: Buy Order -->
+                        <div class="col s12 l12" >
+                            <div class="container">
+                                <div class="row ">
+                                    <div class="col s12 m6">
+                                        <div class="card text-white  mb-3" style="background:#CD853F">
+                                            <div class="card-action center-align flow-text white-text" >
+                                                Purchase-BITCOIN
+                                            </div>
+                                            <div class="card-stacked">
+                                                <div class="card-content ">
+                                                    <form action="." method="POST" class="formOrder">
+                                                        {% csrf_token %}
+                                                        {{ form.as_p }}
+                                                        <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
+                                                    </form>
+                                                </div>
+                                            </div>
 
-                <div class="col s12 l12">
+                                        </div>
+                                    </div>
+                                    <div class="col s12 m6">
+                                        <div class="card text-white  mb-3" style="background:#CD853F">
+                                            <div class="card-action center-align flow-text white-text">
+                                                Sale-BITCOIN
+                                            </div>
+                                            <div class="card-stacked">
+                                                <div class="card-content ">
+                                                    <form action="." method="POST"  class="formOrder">
+                                                        {% csrf_token %}
+                                                        {{ form.as_p }}
+                                                        <input class="btn black  " type="submit" value="Submit sell order" name="sell" style="margin: 10px;"/>
+                                                    </form>
+                                                </div>
+                                            </div>
 
-                    <!-- Card: Buy Order -->
-                    <div class="container" id="buy-card" >
-                        <div class="card text-white  mb-3" style="background:#CD853F">
-                            <div class="card-action center-align flow-text white-text">
-                                Purchase-BITCOIN
-                            </div>
-                            <div class="card-stacked">
-                                <div class="card-content ">
-                                    <form action="." method="POST" >
-                                        {% csrf_token %}
-                                        {{ form.as_p }}
-                                        <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
-                                    </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
-                    </div>
-
-
-
-                </div>
-            </div>
-        </section>
 
         <!-- Order Tables -->
         <div class="col s12 l12" id="cards">
@@ -112,13 +126,13 @@
 
                             </div>
                             <div class="card-content">
-                                <table class="table table-dark">
+                                <table class="table table-sm table-hover  table-dark table-responsive ">
                                     <thead>
                                     <tr>
 
-                                        <th>Name</th>
-                                        <th>Quantity (BTC)</th>
-                                        <th>Value (USD)</th>
+                                        <th>ID</th>
+                                        <th>Quantity(BTC)</th>
+                                        <th>Value(USD)</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -126,12 +140,12 @@
                                     <tbody>
                                     {% for order in purchase_orders_list %}
                                     <tr>
-                                        <td>{{order.profile}}</td>
+                                        <td>{{order.get_id}}</td>
                                         <td>{{ order.quantity|floatformat:3}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
                                         <td>{% if order.profile.user.id == profile_pocket.user.id %}
-                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete'  id=order.profile.user.id%} " name="delete" >
+                                            <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
 
                                                         delete
                                                     </a>
@@ -156,12 +170,12 @@
 
                             </div>
                             <div class="card-content">
-                                <table class="table table-dark">
+                                <table class="table table-sm table-hover  table-dark table-responsive ">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Quantity (BTC)</th>
-                                        <th>Value (USD)</th>
+                                        <th>ID</th>
+                                        <th>Quantity(BTC)</th>
+                                        <th>Value(USD)</th>
                                         <th>Date</th>
                                         <th>Action</th>
                                     </tr>
@@ -169,12 +183,12 @@
                                     <tbody>
                                     {% for order in  sale_orders_list %}
                                     <tr>
-                                        <td>{{order.profile}}</td>
+                                        <td>{{order.get_id}}</td>
                                         <td>{{ order.quantity|floatformat:3}} BTC</td>
                                         <td>{{ order.price|floatformat:2}}$</td>
                                         <td>{{order.created}}</td>
                                         <td>{% if order.profile.user.id == profile_pocket.user.id %}
-                                          <a class="btn red lighten-2 white-text" href="{% url 'app:delete'  id=order.profile.user.id%} " name="delete" >
+                                          <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
 
                                                     delete
                                                 </a>

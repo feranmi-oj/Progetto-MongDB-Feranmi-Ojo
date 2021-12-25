@@ -8,8 +8,7 @@
       <div class="w3-right w3-hide-small">
         <a href="https://coinmarketcap.com/currencies/bitcoin/" class="w3-bar-item w3-button">  Bitcoin BTC live-price : {{currency}}<i class="fa fa-usd"></i></a>
         <a href="#about" class="w3-bar-item w3-button"> ABOUT</a>
-        <a href="{%url 'app:sell'%}" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> SELL-BITCOINS</a>
-        <a href="{%url 'app:buy'%}" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> BUY-BITCOINS</a>
+        <a href="{%url 'app:order'%}" class="w3-bar-item w3-button"><i class="fa fa-usd"></i> EXCHANGE</a>
         <a href="{%url 'accounts:profile' user.pk %}" class="w3-bar-item w3-button"><i class="fa fa-user"></i> {{user.username}}</a>
         <a href="{% url 'accounts:logout'%}" class="w3-bar-item w3-button"><i class="fa fa-toggle-off"></i> LOGOUT</a>
       </div>

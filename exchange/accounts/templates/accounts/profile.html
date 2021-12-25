@@ -119,11 +119,11 @@
                                 MY PURCHASE ORDERS
                             </div>
                             <div class="card-content">
-                                <table class="table table-dark">
+                                <table class="table table-sm table-hover  table-dark table-responsive ">
                                     <thead>
                                     <tr>
-                                        <th>Quantity (BTC)</th>
-                                        <th>Value (USD)</th>
+                                        <th>Quantity(BTC)</th>
+                                        <th>Value(USD)</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -137,7 +137,7 @@
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
                                         <td>
-                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
+                                            <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
 
                                                     delete
                                                 </a>
@@ -158,11 +158,11 @@
                                 MY SALE ORDERS
                             </div>
                             <div class="card-content">
-                                <table class="table table-dark">
+                                <table class="table table-sm table-hover  table-dark table-responsive ">
                                     <thead>
                                     <tr>
-                                        <th>Quantity (BTC)</th>
-                                        <th>Value (USD)</th>
+                                        <th>Quantity(BTC)</th>
+                                        <th>Value(USD)</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -176,7 +176,7 @@
                                         <td>{{order.created}}</td>
                                         <td>{{order.status}}</td>
                                         <td>
-                                            <a class="btn red lighten-2 white-text" href="{% url 'app:delete' id=order.profile.user.id%}" name="delete" >
+                                            <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
 
                                                     delete
                                                 </a>
