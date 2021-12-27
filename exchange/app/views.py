@@ -28,23 +28,23 @@ def order_exchange_view(request):
 	if request.method == 'POST':
 		if request.POST.get('buy'):
 
-			print(f'request.POST results:\n{ request.POST }')
 			# Buy Order
 			form = Order_Form(request.POST or None)
 			if form.is_valid():
+
 				status='open'
 				type='buy'
 				price = form.cleaned_data.get('price')
 				quantity = form.cleaned_data.get('quantity')
-
-
 				profile_wallet = Profile.objects.get(user=request.user)
+
 				if price <=0.0:
 					messages.error(request, 'Cannot put a price lower than 0')
 					return redirect('app:order')
 				if quantity <= 0.0:
 					messages.error(request, 'Cannot put a quantity lower than 0')
 					return redirect('app:order')
+
 				if profile_wallet.usd_amount >= price:
 					profile_wallet.usd_amount -=price
 					profile_wallet.save()
@@ -56,7 +56,7 @@ def order_exchange_view(request):
 														 price=price,
 														 quantity=quantity,
 														 modified=timezone.now())
-					messages.success(request, f'Your  purchase order of {new_buy_order.quantity} BTC for {new_buy_order.price}  is successfully added to the Order Book! || Status: {new_buy_order.status}')
+					messages.success(request, f'Your  purchase order of {new_buy_order.quantity} BTC for {new_buy_order.price} ,{new_buy_order._id}  is successfully added to the Order Book! || Status: {new_buy_order.status}')
 					# Order matching
 					if sale_orders_list.exists():
 						max_order_btc=None
@@ -124,14 +124,15 @@ def order_exchange_view(request):
 				status = 'open'
 				price = form.cleaned_data.get('price')
 				quantity = form.cleaned_data.get('quantity')
-				# Checking wallet availability.
 				profile_wallet = Profile.objects.get(user=request.user)
+
 				if price <= 0.0:
 					messages.error(request, 'Cannot put a price lower than 0')
 					return redirect('app:order')
 				if quantity <= 0.0:
 					messages.error(request, 'Cannot put a quantity lower than 0')
 					return redirect('app:order')
+
 				if profile_wallet.btc_amount >= quantity:
 					profile_wallet.btc_amount -= quantity
 					profile_wallet.save()
