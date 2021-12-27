@@ -27,6 +27,9 @@ class RegistrationForm(UserCreationForm):
 
 
 class UserEditForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=40, required=False, help_text='optional')
+    last_name = forms.CharField(max_length=40, required=False, help_text='optional')
+    email = forms.CharField(max_length=120, help_text='Required Submit a valid email address')
     class Meta:
         model = User
         fields = ('username','first_name','last_name','email',)
