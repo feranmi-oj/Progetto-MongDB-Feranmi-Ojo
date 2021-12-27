@@ -11,8 +11,10 @@ import random
 
 @login_required()
 def ip_control_view(request):
+    impactReport = Report()  # ad impactReport gli assegno la classe Report()
+    currency = impactReport.get_data()
+    return render(request, 'accounts/ip_control.html',{'currency':currency} )
 
-    return render(request, 'accounts/ip_control.html', )
 
 def getIpAdd(request):
     try:
@@ -24,6 +26,7 @@ def getIpAdd(request):
     except:
         ip = ""
     return ip
+
 
 def login_view(request):
     impactReport = Report()  # ad impactReport gli assegno la classe Report()
@@ -46,7 +49,6 @@ def login_view(request):
                 user_info = Profile.objects.create(user=user)
                 user_info.last_login = timezone.now()
             user_info.save()
-
 
             ip_address = getIpAdd(request)
             ip_list = []
@@ -90,8 +92,6 @@ def register_view(request):
             newUser.save()
 
 
-
-            username = form.cleaned_data.get('username')
             row_password = form.cleaned_data.get('password1')
             user = authenticate(username=user.username,password=row_password)
             login(request,user)
@@ -100,6 +100,7 @@ def register_view(request):
         form = RegistrationForm()
 
     return render(request,'accounts/registration.html',{'form': form,'currency':currency})
+
 @login_required()
 def profile(request,id):
     user_profile = get_object_or_404(Profile, user_id=id)
@@ -122,7 +123,10 @@ def profile(request,id):
     profile_pocket.profit = sum(profit_sell) - sum(profit_buy)
     profile_pocket.save()
 
-    return render(request, 'accounts/profile.html', {'user_profile': user_profile,'profile_pocket': profile_pocket,'my_purchase_orders_list':my_purchase_orders_list,'my_sale_orders_list':my_sale_orders_list,'currency':currency})
+    return render(request, 'accounts/profile.html', {'user_profile': user_profile,'profile_pocket': profile_pocket,
+                                                     'my_purchase_orders_list':my_purchase_orders_list,
+                                                     'my_sale_orders_list':my_sale_orders_list,
+                                                     'currency':currency})
 
 @login_required
 def edit_profile(request):
@@ -139,5 +143,4 @@ def edit_profile(request):
     else:
         user_form = UserEditForm(instance=request.user)
 
-    return render(request,'accounts/edit.html',
-                  {'user_form': user_form})
+    return render(request,'accounts/edit.html',{'user_form': user_form})
