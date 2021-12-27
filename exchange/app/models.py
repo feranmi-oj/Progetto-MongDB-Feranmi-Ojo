@@ -1,7 +1,6 @@
 from django.db import models
 from djongo.models.fields import ObjectIdField
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.utils import timezone
 # Create your models here.
 
