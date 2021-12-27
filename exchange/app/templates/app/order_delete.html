@@ -1,43 +1,43 @@
 {% extends "app/base.html" %}
 {% load static%}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/login.css'%}">
-<h1>Delete Order....</h1>
-<br/>
-<<div class="w3-container " style="padding:128px 16px" align="center">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <h1>Delete Order....</h1>
+    <br/>
+    <<div class="w3-container " style="padding:128px 16px" align="center">
 
 
         <div class="wrapper fadeInDown" >
-          <div id="formContent">
+            <div id="formContent">
                 <form method="POST">
                     {% csrf_token %}
                     <h2 class="active">Are you sure?</h2>
                     <p><strong>Are you sure you want to delete "?</strong></p>
                     <form action="." method="POST"> {% csrf_token %}
-                    <input type="submit" class="btn btn-outline-primary" value="Yes, i'm sure" style="background-color:#B22222">
+                        <input type="submit" class="btn btn-outline-primary" value="Yes, i'm sure" style="background-color:#B22222">
                     </form>
                     <input type=button value="No, take me back"  onClick="javascript:history.go(-1);">
                 </form>
-               <div id="formFooter">
+                <div id="formFooter">
 
-            </div>
-               {% for message in messages %}
-    {% if 'success' in message.tags %}
-    <div class="card green lighten-2 white-text">
-        {% elif 'error' in message.tags %}
-        <div class="card red lighten-2 white-text">
-        {% elif 'info' in message.tags %}
-            <div class="card blue lighten-2 white-text">
-            {% endif %}
+                </div>
+                {% for message in messages %}
+                {% if 'success' in message.tags %}
+                <div class="card green lighten-2 white-text">
+                    {% elif 'error' in message.tags %}
+                    <div class="card red lighten-2 white-text">
+                        {% elif 'info' in message.tags %}
+                        <div class="card blue lighten-2 white-text">
+                            {% endif %}
 
-            <div class=" card-content center">
-                <h5 class="">{{ message }}</h5>
+                            <div class=" card-content center">
+                                <h5 class="">{{ message }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
-        {% endfor %}
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock%}
