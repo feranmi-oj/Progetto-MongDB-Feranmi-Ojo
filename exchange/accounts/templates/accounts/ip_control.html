@@ -1,45 +1,40 @@
 {% extends "app/base.html" %}
 {% load static%}
 {% block content %}
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
 
-<link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
 
     <div class="w3-container " style="padding:128px 16px" align="center">
-
         <div class="wrapper fadeInDown" >
-          <div id="formContent">
-            <!-- Tabs Titles -->
-            <h2 class="active"> Warning! </h2>
-
-
-            <p class="flow-text"><strong>Your actual ip address is different from the last login. We suggest you to change
-                        password.</strong></p>
-                        <div class="card-action">
-
-                            <a class="btn btn-outline-secondary" href="{%url 'accounts:profile' user.pk %}" name="next" style="margin: 10px;">Go To Platform</a>
-                            <a class="btn btn-outline-secondary" href="{% url 'accounts:password_change'%}" style="margin: 10px;">Change password</a>
-                        </div>
-
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
+            <div id="formContent">
+                <!-- Tabs Titles -->
+                <h2 class="active"> Warning! </h2>
+                <p class="flow-text">
+                    <strong>
+                        Your actual ip address is different from the last login. We suggest you to change password.
+                    </strong>
+                </p>
+                <div class="card-action">
+                    <a class="btn btn-outline-secondary" href="{%url 'accounts:profile' user.pk %}" name="next" style="margin: 10px;">Go To Platform</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'accounts:password_change'%}" style="margin: 10px;">Change password</a>
+                </div>
+                <div id="formFooter"></div>
 
             </div>
-
-          </div>
         </div>
 
     </div>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 
 

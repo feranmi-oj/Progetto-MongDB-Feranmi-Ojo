@@ -25,188 +25,21 @@
 
 
     <body>
-    <!-- Wallet_Table -->
-    <div class="card" id="table" style="background:#CD853F">
-        <div class=" card-content">
-            <div class="card-action center-align flow-text white-text">
-                <h4 class=" text:center color:white"><strong>Your Wallet</strong></h4>
-            </div>
-            <table class=" table table-dark " >
-                <thead>
-                <tr class="white-text flow-text">
-                    <th>Bitcoins available</th>
-                    <th>Initial Bitcoins</th>
-                    <th>Dollars available</th>
-                    <th>Initial dollars</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{ profile_pocket.btc_amount|floatformat:3 }} BTC</td>
-                    <td>{{ profile_pocket.btc_balance|floatformat:3 }} BTC</td>
-                    <td>{{ profile_pocket.usd_amount|floatformat:2}}$</td>
-                    <td>{{ profile_pocket.usd_balance|floatformat:2}}$</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <!-- Messages -->
-    {% for message in messages %}
-    {% if 'success' in message.tags %}
-    <div class="card green lighten-2 white-text">
-        {% elif 'error' in message.tags %}
-        <div class="card red lighten-2 white-text">
-        {% elif 'info' in message.tags %}
-            <div class="card blue lighten-2 white-text">
-            {% endif %}
-
-            <div class=" card-content center">
-                <h5 class="">{{ message }}</h5>
-            </div>
-        </div>
-    </div>
-        {% endfor %}
-
+        {% block wallet_table %}
+        {% include "app/partials_page_exchange/card_wallet_table.html" %}
+        {% endblock %}
 
         <!-- Card: Buy Order -->
-                        <div class="col s12 l12" >
-                            <div class="container">
-                                <div class="row ">
-                                    <div class="col s12 m6">
-                                        <div class="card text-white  mb-3" style="background:#CD853F">
-                                            <div class="card-action center-align flow-text white-text" >
-                                                Purchase-BITCOIN
-                                            </div>
-                                            <div class="card-stacked">
-                                                <div class="card-content ">
-                                                    <form action="." method="POST" class="formOrder">
-                                                        {% csrf_token %}
-                                                        {{ form.as_p }}
-                                                        <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
-                                                    </form>
-                                                </div>
-                                            </div>
+        {% block card_buy_sell %}
+        {% include "app/partials_page_exchange/card_buy_sell.html" %}
+        {% endblock %}
 
-                                        </div>
-                                    </div>
-                                    <div class="col s12 m6">
-                                        <div class="card text-white  mb-3" style="background:#CD853F">
-                                            <div class="card-action center-align flow-text white-text">
-                                                Sale-BITCOIN
-                                            </div>
-                                            <div class="card-stacked">
-                                                <div class="card-content ">
-                                                    <form action="." method="POST"  class="formOrder">
-                                                        {% csrf_token %}
-                                                        {{ form.as_p }}
-                                                        <input class="btn black  " type="submit" value="Submit sell order" name="sell" style="margin: 10px;"/>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
         <!-- Order Tables -->
-        <div class="col s12 l12" id="cards">
-            <div class="container">
-                <div class="row">
+        {% block card_order_tables %}
+        {% include "app/partials_page_exchange/card_order_tables.html" %}
+        {% endblock %}
 
-
-
-                    <!-- Buy orders -->
-                    <div class="col s12 m6">
-                        <div class="card text-white  mb-3" style="background:#CD853F">
-                            <div class="card-action center-align flow-text white-text">
-                                BID - BUY ORDERS
-
-                            </div>
-                            <div class="card-content">
-                                <table class="table table-sm table-hover  table-dark table-responsive ">
-                                    <thead>
-                                    <tr>
-
-                                        <th>ID</th>
-                                        <th>Quantity(BTC)</th>
-                                        <th>Value(USD)</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for order in purchase_orders_list %}
-                                    <tr>
-                                        <td>{{order.get_id}}</td>
-                                        <td>{{ order.quantity|floatformat:3}} BTC</td>
-                                        <td>{{ order.price|floatformat:2}}$</td>
-                                        <td>{{order.created}}</td>
-                                        <td>{% if order.profile.user.id == profile_pocket.user.id %}
-                                            <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
-
-                                                        delete
-                                                    </a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
-                                <div class="container">
-                                    <a class="btn black" href="{% url 'app:json-purchase'%}" target="_blank" style="margin: 10px;;">JsonFile</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Sell orders -->
-                    <div class="col s12 m6">
-                        <div class="card text-white  mb-3" style="background:#CD853F">
-                            <div class="card-action center-align flow-text white-text">
-                                ASK - SELL ORDERS
-
-                            </div>
-                            <div class="card-content">
-                                <table class="table table-sm table-hover  table-dark table-responsive ">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Quantity(BTC)</th>
-                                        <th>Value(USD)</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    {% for order in  sale_orders_list %}
-                                    <tr>
-                                        <td>{{order.get_id}}</td>
-                                        <td>{{ order.quantity|floatformat:3}} BTC</td>
-                                        <td>{{ order.price|floatformat:2}}$</td>
-                                        <td>{{order.created}}</td>
-                                        <td>{% if order.profile.user.id == profile_pocket.user.id %}
-                                          <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
-
-                                                    delete
-                                                </a>
-                                            {% endif %}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </table>
-                                 <div class="container">
-                                    <a class="btn black" href="{% url 'app:json-sale'%}" target="_blank"  style="margin: 10px;;">JsonFile</a>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </body>
 

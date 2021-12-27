@@ -1,22 +1,18 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.generic import DeleteView
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.utils import timezone
-# From this app
 from .models import Order, Profile
 from .forms import Order_Form
 from .market import Report
-from django.urls import reverse_lazy
 from bson import ObjectId
-import logging
 
-# Other imports
+
+
 
 
 def home_view(request):
-
 	impactReport = Report()  # ad impactReport gli assegno la classe Report()
 	currency = impactReport.get_data()
 	return render(request, 'app/base.html',{'currency':currency})
@@ -43,10 +39,10 @@ def order_exchange_view(request):
 
 
 				profile_wallet = Profile.objects.get(user=request.user)
-				if price < 0.0:
+				if price <=0.0:
 					messages.error(request, 'Cannot put a price lower than 0')
 					return redirect('app:order')
-				if quantity < 0.0:
+				if quantity <= 0.0:
 					messages.error(request, 'Cannot put a quantity lower than 0')
 					return redirect('app:order')
 				if profile_wallet.usd_amount >= price:
@@ -55,11 +51,11 @@ def order_exchange_view(request):
 					# Order creation
 					new_buy_order = Order.objects.create(profile=profile_wallet,
 														 _id=ObjectId(),
-																 status=status,
-																 type=type,
-																 price=price,
-																 quantity=quantity,
-																 modified=timezone.now())
+														 status=status,
+														 type=type,
+														 price=price,
+														 quantity=quantity,
+														 modified=timezone.now())
 					messages.success(request, f'Your  purchase order of {new_buy_order.quantity} BTC for {new_buy_order.price}  is successfully added to the Order Book! || Status: {new_buy_order.status}')
 					# Order matching
 					if sale_orders_list.exists():
@@ -101,7 +97,7 @@ def order_exchange_view(request):
 								max_order_btc.save()
 
 								messages.success(request, f'Sell order id: {max_order_btc._id}. || Status: {max_order_btc.status}.')
-								messages.success(request, f'Received  successfully {new_buy_order.price} $.')
+								messages.success(request, f' The User who Sold has Received  successfully {new_buy_order.price} $.')
 								messages.info(request, 'The bitcoin exchange has been totally executed! Congratulations!')
 								return redirect('app:order')
 							elif max_order_btc.quantity < new_buy_order.quantity:
@@ -130,10 +126,10 @@ def order_exchange_view(request):
 				quantity = form.cleaned_data.get('quantity')
 				# Checking wallet availability.
 				profile_wallet = Profile.objects.get(user=request.user)
-				if price < 0.0:
+				if price <= 0.0:
 					messages.error(request, 'Cannot put a price lower than 0')
 					return redirect('app:order')
-				if quantity < 0.0:
+				if quantity <= 0.0:
 					messages.error(request, 'Cannot put a quantity lower than 0')
 					return redirect('app:order')
 				if profile_wallet.btc_amount >= quantity:
@@ -141,11 +137,11 @@ def order_exchange_view(request):
 					profile_wallet.save()
 					# Order creation
 					new_sell_order = Order.objects.create(profile=profile_wallet,
-														  	  type=type,
-															  status=status,
-															  price=price,
-															  quantity=quantity,
-															  modified=timezone.now())
+														  type=type,
+														  status=status,
+														  price=price,
+														  quantity=quantity,
+														  modified=timezone.now())
 					messages.success(request,
 									 f'Your sales order of {new_sell_order.quantity} BTC for {new_sell_order.price}, {new_sell_order._id} is successfully added to the Order Book! || Status:{new_sell_order.status}')
 					# Order matching
@@ -172,12 +168,8 @@ def order_exchange_view(request):
 											messages.error(request,
 														   f"||Amount of bitcoins they want to buy : {max_value.quantity}")
 											max_value = None
-									messages.info(request, f'Search vgvjv {new_sell_order._id}')
-							messages.info(request, f'Search vgvjv {new_sell_order._id}')
-						messages.info(request, f'Search vgvjv {new_sell_order._id}')
 						if max_value != None:
 							if max_value.quantity == new_sell_order.quantity:
-								messages.info(request, f'Search vgvjv {new_sell_order._id}')
 								# Sell order can close.
 								actual_usd = profile_wallet.usd_amount
 								new_sell_order.price = max_value.price
@@ -202,7 +194,7 @@ def order_exchange_view(request):
 								max_value.save()
 								messages.success(request,
 												 f'Buy order id: {max_value._id}. || Status: {max_value.status}.')
-								messages.success(request, f'Received  successfully {new_sell_order.quantity} BTC.')
+								messages.success(request, f'The User who purchased has Received  successfully {new_sell_order.quantity} BTC.')
 								messages.info(request,
 											  'The bitcoin exchange has been totally executed! Congratulations!')
 								return redirect('app:order')
@@ -216,24 +208,14 @@ def order_exchange_view(request):
 			else:
 				messages.error(request, 'Order can not have negative values!')
 
-
-
-
-
-
-	# Orders lists refresh
 	form = Order_Form()
 	profile_pocket= Profile.objects.get(user=request.user)
-	# Getting latest trade price
-
-
-
 	return render(request, 'app/page_exchange.html', {'form': form,
-												 'purchase_orders_list': purchase_orders_list,
-												 'sale_orders_list': sale_orders_list,
-												 'profile_pocket': profile_pocket,
-												 'currency': currency
-												 })
+													  'purchase_orders_list': purchase_orders_list,
+													  'sale_orders_list': sale_orders_list,
+													  'profile_pocket': profile_pocket,
+													  'currency': currency
+													  })
 
 
 
@@ -289,8 +271,6 @@ def sale_order_Book(request):
 def delete_order_view(request,id):
 
 	if request.method == 'POST':
-
-
 		oll=Order.objects.filter(_id=ObjectId(id)).first()
 		if oll.type=='buy' :
 			p_order = Order.objects.filter(_id=ObjectId(id)).first()
@@ -309,7 +289,5 @@ def delete_order_view(request,id):
 			messages.success(request, 'Your sell order has been deleted successfully!')
 			return redirect('app:order')
 
-
 	return render(request, 'app/order_delete.html')
-# If method is not POST, render the default template.
-# *Note*: Replace 'template_name.html' with your corresponding template name.
+

@@ -1,0 +1,42 @@
+<!-- Wallet_Table -->
+<div class="card" id="table" style="background:#CD853F">
+    <div class=" card-content">
+        <div class="card-action center-align flow-text white-text">
+            <h4 class=" text:center color:white"><strong>Your Wallet</strong></h4>
+        </div>
+        <table class=" table table-dark " >
+            <thead>
+            <tr class="white-text flow-text">
+                <th>Bitcoins available</th>
+                <th>Initial Bitcoins</th>
+                <th>Dollars available</th>
+                <th>Initial dollars</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{{ profile_pocket.btc_amount|floatformat:3 }} BTC</td>
+                <td>{{ profile_pocket.btc_balance|floatformat:3 }} BTC</td>
+                <td>{{ profile_pocket.usd_amount|floatformat:2}}$</td>
+                <td>{{ profile_pocket.usd_balance|floatformat:2}}$</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Messages -->
+{% for message in messages %}
+{% if 'success' in message.tags %}
+<div class="card green lighten-2 white-text">
+    {% elif 'error' in message.tags %}
+    <div class="card red lighten-2 white-text">
+        {% elif 'info' in message.tags %}
+        <div class="card blue lighten-2 white-text">
+            {% endif %}
+
+            <div class=" card-content center">
+                <h5 class="">{{ message }}</h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}

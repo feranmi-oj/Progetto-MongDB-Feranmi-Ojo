@@ -1,19 +1,15 @@
 {% extends "app/base.html" %}
 {% load static%}
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
     <div class="w3-container " style="padding:128px 16px" align="center">
-
-
         <div class="wrapper fadeInDown" >
           <div id="formContent">
             <!-- Tabs Titles -->
              <h2>Edit Your Profile</h2>
-
-
             <!-- Login Form -->
-            <form   method="post" >
-                 {% csrf_token %}
+            <form method="post">
+                {% csrf_token %}
                 {{user_form.as_p}}
                 <a class="btn btn-outline-secondary" href="{%url 'accounts:profile' user.pk %}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-return-left" viewBox="0 0 16 16">
@@ -22,12 +18,7 @@
                 </a>
                 <input type="submit" value="Change Profile">
             </form>
-
-
           </div>
         </div>
-
     </div>
-
-</div>
 {% endblock %}

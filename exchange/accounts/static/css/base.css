@@ -54,10 +54,10 @@ body, html {
   -ms-interpolation-mode: nearest-neighbor;
 }
 /* Full height image header */
-.bgimg-1 {
+body {
   background-position: center;
   background-size: cover;
-  background-image: url("https://cryptonomist.ch/wp-content/uploads/2021/10/bitcoin-block-1.jpg");
+  background-image: url("{% static '/img/img_3.jpg' %}");
   min-height: 100%;
 }
 
