@@ -81,7 +81,7 @@ def order_exchange_view(request):
 								new_buy_order.quantity = sale_order.quantity
 								new_buy_order.status='close'
 								new_buy_order.save()
-								profile_wallet.btc_amount+=new_buy_order.quantity
+								profile_wallet.btc_amount+=max_order_btc.quantity
 								profile_wallet.save()
 								messages.info(request, 'Start of the bitcoin exchange')
 								messages.success(request,f'Your Buy order id: {new_buy_order._id}. || Status: {new_buy_order.status}.')
