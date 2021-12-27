@@ -1,40 +1,46 @@
 <div class="col s12 l12" >
   <div class="container">
-    <div class="row ">
-      <div class="col s12 m6">
-        <div class="card text-white  mb-3" style="background:#CD853F">
-          <div class="card-action center-align flow-text white-text" >
-            Purchase-BITCOIN
-          </div>
-          <div class="card-stacked">
-            <div class="card-content ">
-              <form action="." method="POST" class="formOrder">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
-              </form>
+        <div class="row ">
+
+          <div class="col s12 m6">
+            <div class="card text-white  mb-3" style="background:#CD853F">
+              <div class="card-action center-align flow-text white-text" >
+                Purchase-BITCOIN
+              </div>
+              <div class="card-stacked">
+                <div class="card-content ">
+                  <form action="." method="POST" class="formOrder">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <input class="btn black  " type="submit" value="Submit buy order" name="buy" style="margin: 10px;"/>
+                  </form>
+                </div>
+              </div>
+
             </div>
           </div>
 
-        </div>
-      </div>
-      <div class="col s12 m6">
-        <div class="card text-white  mb-3" style="background:#CD853F">
-          <div class="card-action center-align flow-text white-text">
-            Sale-BITCOIN
-          </div>
-          <div class="card-stacked">
-            <div class="card-content ">
-              <form action="." method="POST"  class="formOrder">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <input class="btn black  " type="submit" value="Submit sell order" name="sell" style="margin: 10px;"/>
-              </form>
+
+          <div class="col s12 m6">
+            <div class="card text-white  mb-3" style="background:#CD853F">
+              <div class="card-action center-align flow-text white-text">
+                Sale-BITCOIN
+              </div>
+              <div class="card-stacked">
+                <div class="card-content ">
+                  <form action="." method="POST"  class="formOrder">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="btn black  " type="submit" value="Submit sell order" name="sell" style="margin: 10px;"/>
+                  </form>
+                </div>
+              </div>
+
             </div>
           </div>
 
-        </div>
+
       </div>
-    </div>
   </div>
 </div>
