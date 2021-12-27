@@ -11,12 +11,12 @@
           <div id="formContent">
                 <form method="POST">
                     {% csrf_token %}
-                    <h4>Are you sure?</h4><br/>
+                    <h2 class="active">Are you sure?</h2>
                     <p><strong>Are you sure you want to delete "?</strong></p>
                     <form action="." method="POST"> {% csrf_token %}
-                    <input type="submit" class="btn btn-outline-primary" value="Yes, i'm sure" style="background-color:red">
+                    <input type="submit" class="btn btn-outline-primary" value="Yes, i'm sure" style="background-color:#B22222">
                     </form>
-                    <input type=button value="No, take me back"  onClick="javascript:history.go(-1);">.ù
+                    <input type=button value="No, take me back"  onClick="javascript:history.go(-1);">
                 </form>
                <div id="formFooter">
 
