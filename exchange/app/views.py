@@ -84,14 +84,14 @@ def order_exchange_view(request):
                                         # Sell order can close.
                                         sell_order = Order.objects.get(_id=sale_order._id)
                                         profile_s= Profile.objects.get(user= sell_order.profile.user)
-                                        profile_s.usd_amount+=(sale_order.price*quantity)
+                                        profile_s.usd_amount+=(sale_order.price*sale_order.quantity)
 
                                         profile_s.save()
                                         sale_order.status = 'close'
                                         sale_order.save()
 
                                         messages.success(request, f'Sell order id: {sale_order._id}. || Status: {sale_order.status}.')
-                                        messages.success(request, f' The User who Sold has Received  successfully {sale_order.price} $.')
+                                        messages.success(request, f' The User who Sold has Received  successfully {sale_order.price}$ *{sale_order.quantity} .')
                                         messages.info(request, 'The bitcoin exchange has been totally executed! Congratulations!')
                                         return redirect('app:order')
                                     elif sale_order.quantity > new_buy_order.quantity :
@@ -120,7 +120,7 @@ def order_exchange_view(request):
                                         messages.success(request,
                                                          f'Sell order id: {sale_order._id}. || Status: {sale_order.status}.')
                                         messages.success(request,
-                                                         f' The User who Sold has Received  successfully {new_buy_order.price} $.')
+                                                         f' The User who Sold has Received  successfully {new_buy_order.price}$ *{new_buy_order.quantity}.')
                                         messages.info(request,
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
@@ -150,7 +150,7 @@ def order_exchange_view(request):
                                         messages.success(request,
                                                          f'Sell order id: {sale_order._id}. || Status: {sale_order.status}.')
                                         messages.success(request,
-                                                         f' The User who Sold has Received  successfully {sale_order.price} $.')
+                                                         f' The User who Sold has Received  successfully {sale_order.price} $ * {sale_order.quantity}.')
                                         messages.info(request,
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
