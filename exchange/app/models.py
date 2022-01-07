@@ -29,7 +29,6 @@ class Order(models.Model):
 	type = models.CharField(max_length=4)
 	price = models.FloatField()
 	quantity = models.FloatField()
-	limit = models.FloatField()
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 

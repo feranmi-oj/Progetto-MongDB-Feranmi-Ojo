@@ -19,7 +19,6 @@
                                 <th>ID</th>
                                 <th>Quantity(BTC)</th>
                                 <th>Value(USD)</th>
-                                <th>LimitMin(USD)</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -30,7 +29,6 @@
                                 <td>{{order.get_id}}</td>
                                 <td>{{ order.quantity}} BTC</td>
                                 <td>{{ order.price|floatformat:2}}$</td>
-                                <td>{{ order.limit|floatformat:2}}$</td>
                                 <td>{{order.created}}</td>
                                 <td>{% if order.profile.user.id == profile_pocket.user.id %}
                                     <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
@@ -64,7 +62,6 @@
                                 <th>ID</th>
                                 <th>Quantity(BTC)</th>
                                 <th>Value(USD)</th>
-                                <th>LimitMax(USD)</th>
                                 <th>Date</th>
                                 <th>Action</th>
                             </tr>
@@ -75,7 +72,6 @@
                                 <td>{{order.get_id}}</td>
                                 <td>{{ order.quantity}} BTC</td>
                                 <td>{{ order.price|floatformat:2}}$</td>
-                                <td>{{ order.limit|floatformat:2}}$</td>
                                 <td>{{order.created}}</td>
                                 <td>{% if order.profile.user.id == profile_pocket.user.id %}
                                     <a class="btn red lighten-2 white-text" href="/exchange/{{order.get_id}}/delete" name="delete" >
