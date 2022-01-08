@@ -125,6 +125,7 @@ def order_exchange_view(request):
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
 
+
                                     elif sale_order.quantity < new_buy_order.quantity:
                                         actual_btc = profile_wallet.btc_amount
 
@@ -154,8 +155,10 @@ def order_exchange_view(request):
                                         messages.info(request,
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
+
                                     else:
                                         return redirect('app:order')
+                        return redirect('app:order')
                     else:
                         return redirect('app:order')
                 else:
@@ -260,6 +263,7 @@ def order_exchange_view(request):
                                         messages.info(request,
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
+
                                     elif buy_open_order.quantity < new_sell_order.quantity:
                                         actual_usd= profile_wallet.usd_amount
                                         new_sell_order.quantity -= buy_open_order.quantity
@@ -290,15 +294,9 @@ def order_exchange_view(request):
                                         messages.info(request,
                                                       'The bitcoin exchange has been totally executed! Congratulations!')
 
-
-
-
-
-
-
                                     else:
                                         return redirect('app:order')
-
+                        return redirect('app:order')
                     else:
                         return redirect('app:order')
                 else:
