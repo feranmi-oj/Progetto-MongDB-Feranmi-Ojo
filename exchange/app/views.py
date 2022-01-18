@@ -58,7 +58,6 @@ def order_exchange_view(request):
                     # Order matching
                     if sale_orders_list.exists():
                         for sale_order in sale_orders_list:
-                            if new_buy_order.profile != sale_order.profile:
                                 if sale_order.price <= new_buy_order.price :
 
                                     messages.info(request, f'Search for the best sales order')
@@ -198,7 +197,6 @@ def order_exchange_view(request):
                     if purchase_orders_list.exists():
 
                         for buy_open_order in purchase_orders_list:
-                            if buy_open_order.profile != new_sell_order.profile:
                                 if buy_open_order.price >= new_sell_order.price :
 
                                     messages.info(request, f'Search for the best purchase order')
