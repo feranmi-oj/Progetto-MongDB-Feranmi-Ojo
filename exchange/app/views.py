@@ -22,8 +22,8 @@ def home_view(request):
 def order_exchange_view(request):
     impactReport = Report()  # ad impactReport gli assegno la classe Report()
     currency = impactReport.get_data()
-    purchase_orders_list = Order.objects.filter(status='open',type='buy').order_by('created')
-    sale_orders_list = Order.objects.filter(status='open',type='sell').order_by('created')
+    purchase_orders_list = Order.objects.filter(status='open',type='buy').order_by('-price')
+    sale_orders_list = Order.objects.filter(status='open',type='sell').order_by('-price')
     # Orders lists
     if request.method == 'POST':
         if request.POST.get('buy'):
